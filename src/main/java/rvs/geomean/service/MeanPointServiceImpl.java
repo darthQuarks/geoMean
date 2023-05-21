@@ -5,7 +5,7 @@ import rvs.geomean.datamodel.Point;
 import rvs.geomean.datamodel.PointCollection;
 
 @Service
-public class PointServiceImpl implements PointService {
+public class MeanPointServiceImpl implements MeanPointService {
     
     private double getDotProduct(Point current, Point next) {
         return current.getX() * next.getX()
