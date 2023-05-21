@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,7 +13,7 @@ import rvs.geomean.datamodel.PointCollection;
 import rvs.geomean.service.MeanPointService;
 
 @Controller
-@SessionAttributes(names = {"pointCollection", "meanPoint"})
+@SessionAttributes("pointCollection")
 public class GeomeanController {
 
     @Autowired
@@ -23,16 +22,10 @@ public class GeomeanController {
     @GetMapping("/")
     public ModelAndView index(HttpSession session, Model model) {
         model.addAttribute("meanPoint", null);
-        session.setAttribute("meanPoint", null);
 
         PointCollection pointCollection = new PointCollection();
         model.addAttribute("pointCollection", pointCollection);
         session.setAttribute("pointCollection", pointCollection);
-        return new ModelAndView("index");
-    }
-
-    @PostMapping("/add_points")
-    public ModelAndView addPoints(HttpSession session, Model model) {
         return new ModelAndView("index");
     }
 
@@ -45,7 +38,6 @@ public class GeomeanController {
             Point meanPoint = meanPointService.getMeanPoint(pointCollection);
             model.addAttribute("pointCollection", pointCollection);
             if (meanPoint != null) {
-                session.setAttribute("meanPoint", meanPoint);
                 model.addAttribute("meanPoint", meanPoint);
             }
         }
@@ -60,16 +52,9 @@ public class GeomeanController {
             Point meanPoint = meanPointService.getMeanPoint(pointCollection);
             model.addAttribute("pointCollection", pointCollection);
             if (meanPoint != null) {
-                session.setAttribute("meanPoint", meanPoint);
                 model.addAttribute("meanPoint", meanPoint);
             }
         }
         return new ModelAndView("index");
-    }
-
-    @GetMapping("/error")
-    public String getError(HttpSession session, Model model) {
-        //model.addAttribute("message", "home");
-        return "error/404";
     }
 }
