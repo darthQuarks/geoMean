@@ -5,6 +5,10 @@ public class Point {
     private static double scale = 1e12;
     private final double x, y, z, latitude, longitude;
 
+    public Point (String latitude, String longitude) {
+        this(Double.parseDouble(latitude), Double.parseDouble(longitude));
+    }
+
     public Point(double degreesLatitude, double degreesLongitude) {
         // By calling cartesian constructor, lat and lon are automatically sanitized
         this(Math.cos(Math.toRadians(degreesLatitude)) * Math.cos(Math.toRadians(degreesLongitude)),
