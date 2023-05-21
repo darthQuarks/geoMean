@@ -6,7 +6,7 @@ import rvs.geomean.datamodel.PointCollection;
 
 @Service
 public class MeanPointServiceImpl implements MeanPointService {
-    
+
     private double getDotProduct(Point current, Point next) {
         return current.getX() * next.getX()
                 + current.getY() * next.getY()
@@ -22,11 +22,11 @@ public class MeanPointServiceImpl implements MeanPointService {
             return current;
         }
         double angle = Math.acos(dotProduct);
-        double angleToMove = angle / (mass + 1) ;
+        double angleToMove = angle / (mass + 1);
 
         double orthogonalNorm = 1 / Math.sqrt(1 - dotProduct * dotProduct);
 
-        double orthonormalNextX = (next.getX() - dotProduct * current.getX() )* orthogonalNorm;
+        double orthonormalNextX = (next.getX() - dotProduct * current.getX()) * orthogonalNorm;
         double orthonormalNextY = (next.getY() - dotProduct * current.getY()) * orthogonalNorm;
         double orthonormalNextZ = (next.getZ() - dotProduct * current.getZ()) * orthogonalNorm;
 

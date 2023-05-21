@@ -5,7 +5,7 @@ public class Point {
     private static double scale = 1e12;
     private final double x, y, z, latitude, longitude;
 
-    public Point (String latitude, String longitude) {
+    public Point(String latitude, String longitude) {
         this(Double.parseDouble(latitude), Double.parseDouble(longitude));
     }
 
