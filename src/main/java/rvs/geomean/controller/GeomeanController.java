@@ -31,7 +31,6 @@ public class GeomeanController {
         return new ModelAndView("index");
     }
 
-
     @PostMapping("/add_points")
     public ModelAndView addPoints(HttpSession session, Model model) {
         return new ModelAndView("index");
