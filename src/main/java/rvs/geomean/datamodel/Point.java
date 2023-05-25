@@ -86,4 +86,47 @@ public class Point {
         return builder.toString();
     }
 
+    public String prettyMinutes() {
+        double degreesLatitude = Math.abs(getDegreesLatitude());
+        double degreesLongitude = Math.abs(getDegreesLongitude());
+        StringBuilder builder = new StringBuilder();
+        builder.append(Math.abs(Math.floor(degreesLatitude)) + "\u00B0")
+                .append(Math.abs(getMinutes(degreesLatitude)) + "\u2032")
+                .append(latitude < 0 ? "S" :  "N");
+
+        builder.append(Math.abs(Math.floor(degreesLongitude)) + "\u00B0")
+                .append(Math.abs(getMinutes(degreesLongitude)) + "\u2032")
+                .append(latitude < 0 ? "W" :  "E");
+
+        return builder.toString();
+    }
+
+    public String prettySeconds() {
+        double degreesLatitude = Math.abs(getDegreesLatitude());
+        double degreesLongitude = Math.abs(getDegreesLongitude());
+        StringBuilder builder = new StringBuilder();
+        builder.append(Math.abs(Math.floor(degreesLatitude)) + "\u00B0")
+                .append(Math.abs(Math.floor(getMinutes(degreesLatitude))) + "\u2032")
+                .append(Math.abs(getSeconds(degreesLatitude)) + "\u2033")
+                .append(latitude < 0 ? "S" :  "N");
+
+        builder.append(Math.abs(Math.floor(degreesLongitude)) + "\u00B0")
+                .append(Math.abs(Math.floor(getMinutes(degreesLongitude))) + "\u2032")
+                .append(Math.abs(getSeconds(degreesLongitude)) + "\u2033")
+                .append(latitude < 0 ? "W" :  "E");
+
+        return builder.toString();
+
+    }
+
+    private double getMinutes(double decimalDegrees) {
+        double decimals = decimalDegrees - Math.floor(decimalDegrees);
+        return 60 * decimals;
+    }
+
+    private double getSeconds(double decimalDegrees) {
+        double minutes = getMinutes(decimalDegrees);
+        return getMinutes(minutes); // seconds are to minutes what minutes are to degrees
+    }
+
 }
