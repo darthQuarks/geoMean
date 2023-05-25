@@ -89,6 +89,8 @@ public class Point {
         builder = getHumanReadableCoordinate(degreesLatitude, levels, builder)
                 .append(latitude < 0 ? "S" :  "N");
 
+        builder.append(", ");
+
         builder = getHumanReadableCoordinate(degreesLongitude, levels, builder)
                 .append(longitude < 0 ? "W" :  "E");
 
@@ -97,12 +99,14 @@ public class Point {
 
     private StringBuilder getHumanReadableCoordinate(double coordinate, int levels, StringBuilder builder) {
         if (levels <=1) {
-            builder.append(coordinate + "\u00B0");
-        } else {
             builder.append(formatNumber(coordinate, 8, "\u00B0"));
+            return builder;
+        } else {
+            builder.append(formatNumber(coordinate, 0, "\u00B0"));
         }
         if (levels == 2) {
             builder.append(formatNumber(getMinutes(coordinate), 4, "\u2032"));
+            return builder;
         } else {
             builder.append(formatNumber(getMinutes(coordinate), 0, "\u2032"));
         }
