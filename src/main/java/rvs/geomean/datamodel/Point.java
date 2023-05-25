@@ -73,15 +73,15 @@ public class Point {
     public String pretty() {
         StringBuilder builder = new StringBuilder();
         if (latitude < 0) {
-            builder.append(Math.abs(getDegreesLatitude()) + " S");
+            builder.append(Math.abs(getDegreesLatitude()) + "\u00B0S");
         } else {
-            builder.append(getDegreesLatitude() + " N");
+            builder.append(getDegreesLatitude() + "\u00B0N");
         }
         builder.append(", ");
         if (longitude < 0) {
-            builder.append(Math.abs(getDegreesLongitude()) + " W");
+            builder.append(Math.abs(getDegreesLongitude()) + "\u00B0W");
         } else {
-            builder.append(getDegreesLongitude() + " E");
+            builder.append(getDegreesLongitude() + "\u00B0E");
         }
         return builder.toString();
     }
