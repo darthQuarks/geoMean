@@ -30,7 +30,7 @@
 </div>
 
 <div th:if="${meanPoint != null}">
-Best place to meet is: <a th:text="${meanPoint?.pretty}">session att</a>
+Best place to meet is: <a th:text="${meanPoint?.prettyInSeconds}">session att</a>
 </div>
 <div th:unless="${meanPoint != null}">
     <br>
@@ -94,7 +94,7 @@ Best place to meet is: <a th:text="${meanPoint?.pretty}">session att</a>
 Selected coordinates:
 <tr th:each="point : ${pointCollection}">
     <br>
-    <td th:text="${point.pretty}">Coordinates</td>
+    <td th:text="${point.prettyInSeconds}">Coordinates</td>
 </tr>
     <br>
     <a class="button button-primary" href="/remove">Remove last</a>
