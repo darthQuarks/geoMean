@@ -35,6 +35,34 @@ class GeomeanApplicationTests {
     }
 
     @Test
+    // Testing cardinal directions in 10 deg steps
+    void eastWestTest() {
+        Point point0 = new Point(0, 0);
+        Point point1 = new Point(0, 10);
+        Point point2 = new Point(0, -10);
+
+        Point actual = meanPointService.getMeanPoint(point0, point1, 1);
+        Assert.isTrue(actual.pretty().contains("E"), "Point is not marked as east");
+
+        actual = meanPointService.getMeanPoint(point0, point2, 1);
+        Assert.isTrue(actual.pretty().contains("W"), "Point is not marked as west");
+    }
+
+    @Test
+        // Testing cardinal directions in 10 deg steps
+    void northSouthTest() {
+        Point point0 = new Point(0, 0);
+        Point point1 = new Point(10, 0);
+        Point point2 = new Point(-10, 0);
+
+        Point actual = meanPointService.getMeanPoint(point0, point1, 1);
+        Assert.isTrue(actual.pretty().contains("N"), "Point is not marked as north");
+
+        actual = meanPointService.getMeanPoint(point0, point2, 1);
+        Assert.isTrue(actual.pretty().contains("S"), "Point is not marked as south");
+    }
+
+    @Test
     // Test mass works
     void testMass() {
         Point point0 = new Point(0, 0);
