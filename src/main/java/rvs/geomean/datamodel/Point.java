@@ -71,51 +71,45 @@ public class Point {
     }
 
     public String pretty() {
-        StringBuilder builder = new StringBuilder();
-        if (latitude < 0) {
-            builder.append(Math.abs(getDegreesLatitude()) + "\u00B0S");
-        } else {
-            builder.append(getDegreesLatitude() + "\u00B0N");
-        }
-        builder.append(", ");
-        if (longitude < 0) {
-            builder.append(Math.abs(getDegreesLongitude()) + "\u00B0W");
-        } else {
-            builder.append(getDegreesLongitude() + "\u00B0E");
-        }
-        return builder.toString();
+        return pretty(1);
     }
 
     public String prettyInMinutes() {
+        return pretty(2);
+    }
+
+    public String prettyInSeconds() {
+        return pretty(3);
+    }
+
+    private String pretty(int levels) {
         double degreesLatitude = Math.abs(getDegreesLatitude());
         double degreesLongitude = Math.abs(getDegreesLongitude());
         StringBuilder builder = new StringBuilder();
-        builder.append(formatNumber(degreesLatitude, 0,"\u00B0"))
-                .append(formatNumber(getMinutes(degreesLatitude), 2, "\u2032"))
+        builder = getHumanReadableCoordinate(degreesLatitude, levels, builder)
                 .append(latitude < 0 ? "S" :  "N");
 
-        builder.append(formatNumber(degreesLongitude, 0,"\u00B0"))
-                .append(formatNumber(getMinutes(degreesLongitude), 2, "\u2032"))
-                .append(latitude < 0 ? "W" :  "E");
+        builder = getHumanReadableCoordinate(degreesLongitude, levels, builder)
+                .append(longitude < 0 ? "W" :  "E");
 
         return builder.toString();
     }
 
-    public String prettyInSeconds() {
-        double degreesLatitude = Math.abs(getDegreesLatitude());
-        double degreesLongitude = Math.abs(getDegreesLongitude());
-        StringBuilder builder = new StringBuilder();
-        builder.append(formatNumber(degreesLatitude, 0,"\u00B0"))
-                .append(formatNumber(getMinutes(degreesLatitude), 0, "\u2032"))
-                .append(formatNumber(getSeconds(degreesLatitude), 2, "\u2033"))
-                .append(latitude < 0 ? "S" :  "N");
-
-        builder.append(formatNumber(degreesLongitude, 0,"\u00B0"))
-                .append(formatNumber(getMinutes(degreesLongitude), 0, "\u2032"))
-                .append(formatNumber(getSeconds(degreesLongitude), 2, "\u2033"))
-                .append(latitude < 0 ? "W" :  "E");
-
-        return builder.toString();
+    private StringBuilder getHumanReadableCoordinate(double coordinate, int levels, StringBuilder builder) {
+        if (levels <=1) {
+            builder.append(coordinate + "\u00B0");
+        } else {
+            builder.append(formatNumber(coordinate, 8, "\u00B0"));
+        }
+        if (levels == 2) {
+            builder.append(formatNumber(getMinutes(coordinate), 4, "\u2032"));
+        } else {
+            builder.append(formatNumber(getMinutes(coordinate), 0, "\u2032"));
+        }
+        if (levels >= 3) {
+            builder.append(formatNumber(getSeconds(coordinate), 2, "\u2033"));
+        }
+        return builder;
     }
 
     private double getMinutes(double decimalDegrees) {
@@ -129,7 +123,7 @@ public class Point {
     }
 
     private String formatNumber(double number, int digitsAfterDot, String suffix) {
-        return getDigitsBeforeDot(Math.abs(getSeconds(number)), digitsAfterDot) + suffix;
+        return getDigitsBeforeDot(getSeconds(number), digitsAfterDot) + suffix;
     }
 
     private String getDigitsBeforeDot(double number, int digitsAfterDot) {
