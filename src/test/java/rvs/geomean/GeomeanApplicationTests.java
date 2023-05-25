@@ -63,9 +63,8 @@ class GeomeanApplicationTests {
         Point stockholm = new Point(59.328986527418, 18.062210083008);
         Point warzawa = new Point(52.200505285726, 21.0390203125);
 
-        PointCollection pointCollection = new PointCollection();
-
-        pointCollection.append(aarhus)
+        PointCollection pointCollection = new PointCollection()
+                .append(aarhus)
                 .append(copenhagen)
                 .append(copenhagen)
                 .append(stockholm)
@@ -74,7 +73,7 @@ class GeomeanApplicationTests {
 
         Point meanPoint = meanPointService.getMeanPoint(pointCollection);
 
-        Assert.isTrue(meanPoint.pretty().equals(skumpamaala.pretty()), "We did not end up in Skumpamåla");
+        Assert.isTrue(meanPoint.pretty().equals(skumpamaala.pretty()), "We did not end up in Skumpamåla (" + skumpamaala.pretty() + ") but in " + meanPoint.pretty());
     }
 
 }
