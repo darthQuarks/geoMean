@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 import rvs.geomean.datamodel.Point;
+import rvs.geomean.datamodel.PointCollection;
 import rvs.geomean.service.MeanPointService;
 
 @SpringBootTest
@@ -52,6 +53,30 @@ class GeomeanApplicationTests {
         result = new Point(0, 3.333333333333333);
         meanPoint = meanPointService.getMeanPoint(point0, point1, 2);
         Assert.isTrue(meanPoint.pretty().equals(result.pretty()), "Point are not equal to scale: " + Point.getScale() + ", mass calculation is wrong");
+    }
+
+    @Test
+        // Testing floating point numbers in a verified calculation
+    void skumpamaalaTest() {
+        Point skumpamaala = new Point(56.462044610198, 15.422228080524); // Where we wanna end up
+
+        Point aarhus = new Point(56.154181770464, 10.205998420715);
+        Point copenhagen = new Point(55.694809438319, 12.554969787598);
+        Point stockholm = new Point(59.328986527418, 18.062210083008);
+        Point warzawa = new Point(52.200505285726, 21.0390203125);
+
+        PointCollection pointCollection = new PointCollection();
+
+        pointCollection.append(aarhus)
+                .append(copenhagen)
+                .append(copenhagen)
+                .append(stockholm)
+                .append(stockholm)
+                .append(warzawa);
+
+        Point meanPoint = meanPointService.getMeanPoint(pointCollection);
+
+        Assert.isTrue(meanPoint.pretty().equals(skumpamaala.pretty()), "We did not end up in Skumpamåla");
     }
 
 }
